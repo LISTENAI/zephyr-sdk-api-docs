@@ -25,7 +25,16 @@ jobs:
         env:
           USE_SSH: true
           GIT_USER: git
+          DEPLOY_ENV: staging
         run: |
-          git config --global user.email "docs@listenai.com"
-          git config --global user.name "listenai-docs"
+          git config --global user.email "zephyr-sdk-api@listenai.com"
+          git config --global user.name "zephyr-sdk-api-docs"
           node deploy.js
+      - name: action LSOpenWeb deploy
+        env:
+          USE_SSH: true
+          GIT_USER: git
+        run: |
+          git config --global user.email "zephyr-sdk-api@listenai.com"
+          git config --global user.name "zephyr-sdk-api-docs"
+          node action.js
