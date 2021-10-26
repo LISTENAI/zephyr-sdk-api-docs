@@ -1,0 +1,28 @@
+name: docs-staging
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  docs-build:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.DOCS_DEPLOY }}
+      - name: Push docs branch
+        env:
+          USE_SSH: true
+          GIT_USER: git
+        run: |
+          git config --global user.email "docs@listenai.com"
+          git config --global user.name "listenai-docs"
+          node deploy.js
