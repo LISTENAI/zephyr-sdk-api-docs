@@ -18,6 +18,9 @@ jobs:
       - uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.DOCS_DEPLOY }}
+      - name: predocs
+        run: |
+          npm i
       - name: Push docs branch
         env:
           USE_SSH: true
